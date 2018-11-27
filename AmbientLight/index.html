@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ambient light</title>
+    <style>
+        body {
+            text-align: center;
+            font-size: 25px;
+        }
+
+        .img {
+            display: inline-block;
+            width: 300px;
+            height: 300px;
+            -webkit-background-size: contain;
+            background-size: contain;
+        }
+
+        .darklight {
+            background: #000;
+            color: #fff;
+        }
+
+        .brightlight {
+            background: #fff;
+            color: #000;
+        }
+
+        .darklight .img {
+            background: url(moon.png) center no-repeat;
+        }
+
+        .brightlight .img {
+            background: url(sun.png) center no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <h1>ambient light (Mac OS X + Firefox 59)</h1>
+    <h2></h2>
+    <div class="img"></div>
+
+    <script>
+      if ('ondevicelight' in window) {
+        window.addEventListener('devicelight', function(event) {
+          var body = document.querySelector('body');
+          var text = document.querySelector('h2');
+          text.innerHTML = 'luminous intensity:   ' + event.value + 'lux';
+          if (event.value < 20) {
+            body.classList.add('darklight');
+            body.classList.remove('brightlight');
+          } else {
+            body.classList.add('brightlight');
+            body.classList.remove('darklight');
+          }
+        });
+      } else {
+        alert('devicelight event not supported');
+      }
+    </script>
+</body>
+</html>
