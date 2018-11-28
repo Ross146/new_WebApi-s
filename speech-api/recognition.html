@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speech Recognition</title>
+</head>
+<body style="text-align: center">
+    <h1>Speech Recognition</h1>
+    <a href="#"><h2 onclick="recognise()">Start recognise</h2></a>
+
+    <h2 class="inner"></h2>
+
+    <script>
+      var recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = function(event) {
+        // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
+        // The SpeechRecognitionResultList object contains SpeechRecognitionResult objects.
+        // It has a getter so it can be accessed like an array
+        // The [last] returns the SpeechRecognitionResult at the last position.
+        // Each SpeechRecognitionResult object contains SpeechRecognitionAlternative objects that contain individual results.
+        // These also have getters so they can be accessed like arrays.
+        // The [0] returns the SpeechRecognitionAlternative at position 0.
+        // We then return the transcript property of the SpeechRecognitionAlternative object
+
+        console.log(event);
+
+        document.querySelector('.inner').innerHTML = event.results[last][0].transcript
+      }
+
+      recognition.onspeechend = function() {
+        recognition.stop();
+      }
+
+      recognition.onnomatch = function(event) {
+        diagnostic.textContent = "I didn't recognise that color.";
+      }
+
+      recognition.onerror = function(event) {
+        diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
+      }
+
+      function recognise () {
+        recognition.start();
+      }
+    </script>
+</body>
+</html>
