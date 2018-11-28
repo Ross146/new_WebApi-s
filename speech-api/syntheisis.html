@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Speech Synthesis</title>
+</head>
+<body style="text-align: center">
+    <h1>Speech Synthesis</h1>
+    <a href="#"><h2 onclick="hi()">Hi everybody Male</h2></a>
+
+    <a href="#"><h2 onclick="hi2()">Hi everybody Female</h2></a>
+
+    <script>
+      function hi () {
+        var utter = new SpeechSynthesisUtterance('Hi everybody!');
+
+        window.speechSynthesis.speak(utter);
+      }
+
+      function hi2 () {
+        var utter2 = new SpeechSynthesisUtterance('Hi everybody!');
+        var voices = window.speechSynthesis.getVoices();
+
+        var voice = voices.find(voice => voice.name === 'Fiona');
+
+        utter2.voice = voice;
+        window.speechSynthesis.speak(utter2);
+      }
+    </script>
+</body>
+</html>
